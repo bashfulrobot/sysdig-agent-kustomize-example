@@ -1,0 +1,4 @@
+resources:
+- all.yaml
+patches:
+  - path: add-annotations.patch.yaml

@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sysdig-agent-node-analyzer
+  namespace: sysdig-agent
+  annotations:
+    vault.hashicorp.com/agent-inject-secret-foo: database/roles/app
+    vault.hashicorp.com/agent-inject-secret-bar: consul/creds/app
+    vault.hashicorp.com/role: 'app'
