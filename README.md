@@ -1,16 +1,14 @@
-# sysdig-agent-kustomize-example
-
-Quick little POC on adding annotations to the Sysdig Chart
-
 ## Add additional kustomization to sysdig-deploy helm charts
 
-Sometimes, a customer may want to add additional not supported by helm charts customizations, like adding specific annotations to some of the resources. For example, it might be Hashicorp Vault secret injection using a Vault Agent Injector and adding particular annotations to the resource.
+In some cases customers might want to add additional not supported by helm charts customizations like adding specific annotations to some of the resources. As an example it might be Hashicorp Vault secret injection by using a Vault Agent Injector and adding specific annotations to the resource.
 
-To achieve this, you might use `kustomize` to perform additional modifications of the resources. To accomplish that, you need to create a similar to the following files structure in your kustomize directory:
+To achieve this you might use `kustomize` to perform additional modifications of the resources. To achieve that you need to create similar to following files structure in you kustomize directory:
 
-- `kustomization.yaml`  - the main file used by kustomize to understand the source and what kind of customizations need to be done.
-- `add-annotations.patch.yaml` - file with the instructions for kustomize.
-- `kustomize.sh`   - additional wrapper to save a rendered helm chart manifest and apply the kusomize configs.
+```
+kustomization.yaml  - main file used by kustomize to understand what is the source and what kind of kustomizations need to be done.
+add-annotations.patch.yaml - file with kustomizations instructions
+kustomize   - additional wrapper to save rendered by helm chart manifests and applying kusomize configs.
+```
 
 ## Prerequisites
 
@@ -21,6 +19,7 @@ To achieve this, you might use `kustomize` to perform additional modifications o
 ## Running the example
 
 ```shell
+cd platform/kustomize
 helm upgrade --install sysdig-agent --namespace sysdig-agent \
 --set global.sysdig.accessKey=MY_ACCESS_KEY \
 --set global.sysdig.secureAPIToken=MY_TOKEN \
@@ -37,10 +36,13 @@ helm upgrade --install sysdig-agent --namespace sysdig-agent \
 sysdig/sysdig-deploy --create-namespace --post-renderer ./kustomize.sh
 ```
 
-- *NOTE* - you can also leverage a `values.yaml` with `helm` as well.
+## Postrenderer with Flux CD
+
+If customer is using Flux CD for deployment of the chart and post-renderer modifications you can find example in the file `fluxcd-sysdig-agent-postrenderer.yaml` in current folder.
 
 ## References
 
 - [Advanced Helm Techniques - Post Rendering](https://helm.sh/docs/topics/advanced/#post-rendering)
 - [Example](https://github.com/thomastaylor312/advanced-helm-demos/tree/master/post-render)
 - [Kustomize - patches](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/)
+- [Flux CD - Helm Releases - Post Renderers](https://fluxcd.io/flux/components/helm/helmreleases/#post-renderers)
