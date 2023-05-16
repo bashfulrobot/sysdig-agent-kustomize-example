@@ -38,7 +38,7 @@ sysdig/sysdig-deploy --create-namespace --post-renderer ./kustomize.sh
 
 ## Postrenderer with Flux CD
 
-If customer is using Flux CD for deployment of the chart and post-renderer modifications you can find example in the file `fluxcd-sysdig-agent-postrenderer.yaml` in current folder.
+If a customer is using Flux CD for deployment of the chart and leveraging post-renderer modifications - you can find an example in the file `fluxcd-sysdig-agent-postrenderer.yaml` in the root of the repo.
 
 ## References
 
